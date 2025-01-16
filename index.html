@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKTU Notes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            background: #f8f9fa;
+            color: #212529;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        header {
+            background-color: #00264d;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .logo {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .toggle-dark-mode {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .toggle-dark-mode i {
+            transition: transform 0.3s;
+        }
+
+        .dark-mode .toggle-dark-mode i {
+            transform: rotate(180deg);
+        }
+
+        .search-bar {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .container-fluid {
+            flex: 1;
+            padding-top: 20px;
+        }
+
+        .left-container {
+            padding: 15px;
+            background: #e9f5ff;
+            border-right: 2px solid #dee2e6;
+            height: 100%;
+            transition: background-color 0.5s;
+        }
+
+        .left-container h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #004080;
+        }
+
+        .left-container a {
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            color: #004d99;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .left-container a:hover {
+            color: #0056b3;
+            font-weight: bold;
+        }
+
+        .right-container iframe {
+            width: 100%;
+            height: 900px; /* Updated height for better view on laptops */
+            border: 2px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #00264d;
+            color: white;
+            font-size: 14px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+            transition: background-color 0.5s;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-icon {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-icon:hover {
+            color: #ffa500;
+        }
+
+        .fas, .fab {
+            margin-right: 5px;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode header, .dark-mode footer {
+            background-color: #1f1f1f;
+        }
+
+        .dark-mode .left-container {
+            background: #1e1e1e;
+            border-right: 2px solid #333;
+        }
+
+        .dark-mode .left-container a {
+            color: #9dc8e3;
+        }
+
+        .dark-mode .left-container a:hover {
+            color: #00aaff;
+        }
+
+        .dark-mode .right-container iframe {
+            border-color: #444;
+        }
+
+        .dark-mode footer a {
+            color: #ffa500;
+        }
+
+        /* Media Query */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 20px;
+            }
+
+            .logo {
+                font-size: 14px;
+                top: 10px;
+                transform: none;
+            }
+
+            .left-container {
+                padding: 10px;
+            }
+
+            .right-container iframe {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">aktuwrld.com</a>
+        <h1>AKTU NOTES</h1>
+        <button class="toggle-dark-mode" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" class="form-control w-50 mx-auto" id="search-bar" placeholder="Search notes...">
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="nav justify-content-center bg-dark text-white py-2">
+                <a class="nav-link text-white" href="#" onclick="loadNotes('DAA')">DAA</a>
+                <a class="nav-link text-white" href="#" onclick="loadNotes('DA')">DA</a>
+                <a class="nav-link text-white" href="#" onclick="loadNotes('MLT')">MLT</a>
+                <a class="nav-link text-white" href="#" onclick="loadNotes('DBMS')">DBMS</a>
+                <a class="nav-link text-white" href="#" onclick="loadNotes('COIL')">COIL</a>
+                <a class="nav-link text-white" href="#" onclick="loadNotes('OOSD')">OOSD</a>
+                <a class="nav-link text-white" href="#" onclick="loadNotes('WEB-T')">WEB-T</a>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-md-3 left-container" id="left-container">
+                <h3>Select a subject to view unit notes</h3>
+            </div>
+            <div class="col-md-9">
+                <div class="right-container">
+                    <iframe id="pdf-viewer" src=""></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 <a href="https://aktuwrld.com">aktuwrld.com</a> | Website developed by Aditya Choudhary
+        <br>
+        <a href="mailto:adityanain552@gmail.com" target="_blank" class="footer-icon">
+            <i class="fas fa-envelope"></i> Gmail
+        </a>
+        |
+        <a href="https://www.instagram.com/aditya_chdry_21/profilecard/?igsh=YmljNjEwZnZvem50" target="_blank" class="footer-icon">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+        |
+        <a href="http://www.youtube.com/@AadiChoudhary-ez7tn" target="_blank" class="footer-icon">
+            <i class="fab fa-youtube"></i> YouTube
+        </a>
+    </footer>
+
+    <script>
+        const notesData = {
+            DAA: [
+                { unit: 'Unit 1', url: 'pdfs/daa-unit1.pdf' },
+                { unit: 'Unit 2', url: 'pdfs/daa-unit2.pdf' },
+                { unit: 'Unit 3', url: 'pdfs/daa-unit3.pdf' },
+                { unit: 'Unit 4', url: 'pdfs/daa-unit4.pdf' },
+                { unit: 'Unit 5', url: 'pdfs/daa-unit5.pdf' }
+            ],
+            DA: [
+                { unit: 'Unit 1', url: 'pdfs/da-unit1.pdf' },
+                { unit: 'Unit 2', url: 'pdfs/da-unit2.pdf' },
+                { unit: 'Unit 3', url: 'pdfs/da-unit3.pdf' },
+                { unit: 'Unit 4', url: 'pdfs/da-unit4.pdf' },
+                { unit: 'Unit 5', url: 'pdfs/da-unit5.pdf' }
+            ],
+            MLT: [
+                { unit: 'Unit 1', url: 'pdfs/mlt-unit1.pdf' },
+                { unit: 'Unit 2', url: 'pdfs/mlt-unit2.pdf' },
+                { unit: 'Unit 3', url: 'pdfs/mlt-unit3.pdf' },
+                { unit: 'Unit 4', url: 'pdfs/mlt-unit4.pdf' },
+                { unit: 'Unit 5', url: 'pdfs/mlt-unit5.pdf' }
+            ],
+            DBMS: [
+                { unit: 'Unit 1', url: 'pdfs/dbms-unit1.pdf' },
+                { unit: 'Unit 2', url: 'pdfs/dbms-unit2.pdf' },
+                { unit: 'Unit 3', url: 'pdfs/dbms-unit3.pdf' },
+                { unit: 'Unit 4', url: 'pdfs/dbms-unit4.pdf' },
+                { unit: 'Unit 5', url: 'pdfs/dbms-unit5.pdf' }
+            ],
+            COIL: [
+                { unit: 'Unit 1', url: 'pdfs/coil-unit1.pdf' },
+                { unit: 'Unit 2', url: 'pdfs/coil-unit2.pdf' },
+                { unit: 'Unit 3', url: 'pdfs/coil-unit3.pdf' },
+                { unit: 'Unit 4', url: 'pdfs/coil-unit4.pdf' },
+                { unit: 'Unit 5', url: 'pdfs/coil-unit5.pdf' }
+            ],
+            OOSD: [
+                { unit: 'Unit 1', url: 'pdfs/oosd-unit1.pdf' },
+                { unit: 'Unit 2', url: 'pdfs/oosd-unit2.pdf' },
+                { unit: 'Unit 3', url: 'pdfs/oosd-unit3.pdf' },
+                { unit: 'Unit 4', url: 'pdfs/oosd-unit4.pdf' },
+                { unit: 'Unit 5', url: 'pdfs/oosd-unit5.pdf' }
+            ],
+            "WEB-T": [
+                { unit: 'Unit 1', url: 'pdfs/web-t-unit1.pdf' },
+                { unit: 'Unit 2', url: 'pdfs/web-t-unit2.pdf' },
+                { unit: 'Unit 3', url: 'pdfs/web-t-unit3.pdf' },
+                { unit: 'Unit 4', url: 'pdfs/web-t-unit4.pdf' },
+                { unit: 'Unit 5', url: 'pdfs/web-t-unit5.pdf' }
+            ]
+        };
+
+        function loadNotes(subject) {
+            const units = notesData[subject];
+            const leftContainer = document.getElementById("left-container");
+            leftContainer.innerHTML = `<h3>Select a unit for ${subject}</h3>`;
+
+            units.forEach(note => {
+                let link = document.createElement("a");
+                link.href = "#";
+                link.innerHTML = note.unit;
+                link.onclick = () => loadUnit(note.url);
+                leftContainer.appendChild(link);
+            });
+        }
+
+        function loadUnit(url) {
+            document.getElementById("pdf-viewer").src = url;
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        document.getElementById("search-bar").addEventListener("input", searchNotes);
+
+        function searchNotes() {
+            const query = document.getElementById("search-bar").value.toLowerCase();
+            const leftContainer = document.getElementById("left-container");
+            leftContainer.innerHTML = "<h3>Search Results</h3>";
+            let found = false;
+
+            for (const subject in notesData) {
+                notesData[subject].forEach(note => {
+                    if (subject.toLowerCase().includes(query) || note.unit.toLowerCase().includes(query)) {
+                        let link = document.createElement("a");
+                        link.href = "#";
+                        link.innerHTML = `${subject} - ${note.unit}`;
+                        link.onclick = () => loadUnit(note.url);
+                        leftContainer.appendChild(link);
+                        found = true;
+                    }
+                });
+            }
+
+            if (!found) {
+                leftContainer.innerHTML += "<p>No matching notes found.</p>";
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
